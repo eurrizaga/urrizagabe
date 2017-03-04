@@ -23,6 +23,7 @@
               $params = null;
             }
             switch($target){
+              case 'edificios':  $result = getEdificios($mysqli, $params); break;
               case 'propietarios': $result = getPropietarios($mysqli, $params); break;
               case 'unidades':  $result = getUnidades($mysqli, $params); break;
             }
@@ -30,6 +31,7 @@
           case 'post': //CREATE
             @$data = $request->data;
             switch($target){
+              case 'edificio': $result = addEdificio($mysqli, $data); break;
               case 'propietario': $result = addPropietario($mysqli, $data); break;
               case 'unidad': $result = addUnidad($mysqli, $data); break;
             }
@@ -37,6 +39,7 @@
           case 'put': //UPDATE
             @$data = $request->data;
             switch($target){
+              case 'edificio': $result = editEdificio($mysqli, $data); break;
               case 'propietario': $result = editPropietario($mysqli, $data); break;
               case 'unidad': $result = editUnidad($mysqli, $data); break;
             }
