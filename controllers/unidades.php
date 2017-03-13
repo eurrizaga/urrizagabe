@@ -101,9 +101,6 @@ function editUnidad($db, $data){
 }
 
 function getEdificios($db, $params){
-    if (isset($params)){
-      //Agregar condiciones
-    }
     $query = "SELECT id, 
             nombre, 
             direccion, 
@@ -113,10 +110,21 @@ function getEdificios($db, $params){
             FROM edificio";
     if (isset($params)){
       //Agregar condiciones
+      $cond = " WHERE ";
+      $i = 0;
+      foreach($params as $p){
+        $cond.="(" . $p->field . " = " . $p->value . ")";
+        $i++;
+        if ($i < count($params)){
+          $cond.= " AND ";
+        }
+      }
+      $query.= $cond;
     }
     $result = get($db, $query);
     return $result;
 }
+
 function addEdificio($db, $data){
     $query = sprintf ("INSERT INTO `edificio`
       ( nombre, 
