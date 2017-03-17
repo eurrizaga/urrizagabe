@@ -28,7 +28,7 @@ function getPropietarios($db, $params){
             FROM cliente AS c
                 INNER JOIN `cliente.propietario` p ON p.id_cliente = c.id";
     if (isset($params)){
-      //Agregar condiciones
+      
     }
     $result = get($db, $query);
     return $result;

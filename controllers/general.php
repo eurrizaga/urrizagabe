@@ -1,6 +1,6 @@
 <?php
 function get($db, $query){
-	$myArray = array();
+  $myArray = array();
   if ($result = $db->query($query)) {
     $tempArray = array();
     while($row = $result->fetch_object()) {
@@ -10,7 +10,7 @@ function get($db, $query){
     $result = json_encode($myArray);
   }
   else{
-    $result = $query;
+    $result = 'Bad query: ' . $query;
   }
   return $result;
 }

@@ -26,6 +26,7 @@
               case 'edificios':  $result = getEdificios($mysqli, $params); break;
               case 'propietarios': $result = getPropietarios($mysqli, $params); break;
               case 'unidades':  $result = getUnidades($mysqli, $params); break;
+              case 'unidadInfo':  $result = getUnidadInfo($mysqli, $params); break;
             }
           break;
           case 'post': //CREATE
