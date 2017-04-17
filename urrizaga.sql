@@ -69,7 +69,7 @@ CREATE TABLE `cliente` (
   `problematico` tinyint(1) DEFAULT NULL,
   `iva` varchar(20) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `cliente.propietario` table : 
@@ -86,7 +86,7 @@ CREATE TABLE `cliente.propietario` (
   `carpeta` int(11) DEFAULT NULL,
   `id_cliente` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `disponibilidad` table : 
@@ -107,11 +107,11 @@ CREATE TABLE `edificio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `direccion` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `contiene_cochera` tinyint(1) DEFAULT NULL,
-  `contiene_depto` tinyint(1) DEFAULT NULL,
   `observaciones` text COLLATE utf8_spanish2_ci,
+  `contiene_depto` tinyint(1) DEFAULT NULL,
+  `contiene_cochera` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `operacion` table : 
@@ -166,9 +166,9 @@ CREATE TABLE `unidad` (
   `carpeta` int(11) DEFAULT NULL,
   `detalles` text COLLATE utf8_spanish2_ci,
   `fecha_ultima_op` date DEFAULT NULL,
-  `tipo_unidad` int(11) DEFAULT NULL,
+  `tipo_unidad` char(20) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `unidad.cochera` table : 
@@ -176,6 +176,7 @@ CREATE TABLE `unidad` (
 
 CREATE TABLE `unidad.cochera` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_unidad` int(11) DEFAULT NULL,
   `numero` varchar(20) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `categoria` int(11) DEFAULT NULL,
   `dist_ascensor` int(11) DEFAULT NULL,
@@ -187,7 +188,7 @@ CREATE TABLE `unidad.cochera` (
   `largo` float(9,2) DEFAULT NULL,
   `subsuelo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `unidad.departamento` table : 
@@ -195,8 +196,12 @@ CREATE TABLE `unidad.cochera` (
 
 CREATE TABLE `unidad.departamento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_unidad` int(11) DEFAULT NULL,
+  `ambientes` int(11) DEFAULT NULL,
+  `piso` int(11) DEFAULT NULL,
+  `letra` char(20) COLLATE utf8_spanish2_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 #
 # Structure for the `usuario` table : 
@@ -229,7 +234,8 @@ INSERT INTO `cliente` (`id`, `apellido`, `nombre`, `tipo_doc`, `nro_doc`, `direc
   (4,'1','1','DNI','1','1','1','1','1','1','1','1','1','2017-02-27',NULL,'1',NULL,'1'),
   (5,'3','3','DNI','3','3','3','3','3','3','3','3','3','2017-02-27',NULL,'3',NULL,'3'),
   (6,'pepe','coco','DNI','12345','asdasjh','fjdlskj','1234','jdhksj','sad','12344','123123','sadasa@sds.sds','2017-02-28',NULL,'dsfsdfsdf',NULL,'cf'),
-  (7,'x','x','DNI','1','6','6','6','6','6','6','6','sadasa@sds.sds','2017-02-28',NULL,'',NULL,'');
+  (7,'x','x','DNI','1','6','6','6','6','6','6','6','sadasa@sds.sds','2017-02-28',NULL,'',NULL,''),
+  (8,'77','77','DNI','77','77','7','7','7','7','7','7','a@a.a','2017-03-19',NULL,'7',NULL,'');
 COMMIT;
 
 #
@@ -240,7 +246,54 @@ INSERT INTO `cliente.propietario` (`id`, `cuit`, `metodo_pago`, `cbu`, `banco`, 
   (1,'1','1','1',1,1,1,1,3),
   (2,'1','1','1',1,1,1,1,4),
   (3,'3','3','3',3,3,1,3,5),
-  (4,'6','','6',6,6,1,6,7);
+  (4,'6','','6',6,6,1,6,7),
+  (5,'77','','7',7,7,1,7,8);
+COMMIT;
+
+#
+# Data for the `edificio` table  (LIMIT 0,500)
+#
+
+INSERT INTO `edificio` (`id`, `nombre`, `direccion`, `observaciones`, `contiene_depto`, `contiene_cochera`) VALUES 
+  (1,'adas','sdas','sadasd',1,0),
+  (2,'bristol','entre rios 1741','sdfsdf',1,1);
+COMMIT;
+
+#
+# Data for the `unidad` table  (LIMIT 0,500)
+#
+
+INSERT INTO `unidad` (`id`, `id_edificio`, `id_propietario`, `hab_venta`, `hab_alquiler`, `codigo`, `carpeta`, `detalles`, `fecha_ultima_op`, `tipo_unidad`) VALUES 
+  (16,2,7,0,1,'7',7,'7',NULL,'d'),
+  (17,2,7,0,1,'8',8,'8',NULL,'d'),
+  (18,2,7,0,1,'54',54,'54',NULL,'d'),
+  (19,2,8,0,1,'7',7,'7',NULL,'d'),
+  (20,2,8,0,1,'6',6,'6',NULL,'d'),
+  (21,2,3,0,1,'1',11,'1',NULL,'d'),
+  (22,2,7,0,1,'2',2,'2',NULL,'d'),
+  (23,2,3,0,1,'1',1,'1',NULL,'c');
+COMMIT;
+
+#
+# Data for the `unidad.cochera` table  (LIMIT 0,500)
+#
+
+INSERT INTO `unidad.cochera` (`id`, `id_unidad`, `numero`, `categoria`, `dist_ascensor`, `dist_esc_caracol`, `dist_esc_bristol`, `dist_esc_izq`, `dist_esc_der`, `ancho`, `largo`, `subsuelo`) VALUES 
+  (1,23,'1',1,1,1,1,1,1,1.00,1.00,1);
+COMMIT;
+
+#
+# Data for the `unidad.departamento` table  (LIMIT 0,500)
+#
+
+INSERT INTO `unidad.departamento` (`id`, `id_unidad`, `ambientes`, `piso`, `letra`) VALUES 
+  (16,16,7,7,'7'),
+  (17,17,8,8,'8'),
+  (18,18,54,54,'54'),
+  (19,19,7,7,'7'),
+  (20,20,6,6,'6'),
+  (21,21,1,1,'1'),
+  (22,22,2,2,'2');
 COMMIT;
 
 

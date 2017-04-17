@@ -44,7 +44,9 @@ function getUnidadInfo($db, $params){
         break;
         case 'd': 
           $query = "SELECT u.id AS id_departamento, 
-                          u.ambientes  
+                          u.ambientes,
+                          u.piso,
+                          u.letra  
                   FROM `unidad.departamento` AS u
                   WHERE u.id_unidad = '$params->id'";
         break;
@@ -116,15 +118,20 @@ function addUnidad($db, $data){
           if ($data->tipo_unidad == 'd'){
               $query2 = sprintf ("INSERT INTO `unidad.departamento`
                 ( id_unidad,
-                  ambientes ) 
-                  VALUES ('%s', '%s')",
+                  ambientes,
+                  piso,
+                  letra ) 
+                  VALUES ('%s', '%s', '%s', '%s')",
                     $db->real_escape_string($db->insert_id),
-                    $db->real_escape_string($data->ambientes));
+                    $db->real_escape_string($data->ambientes),
+                    $db->real_escape_string($data->piso),
+                    $db->real_escape_string($data->letra));
               $db->query($query2);
+              echo $query2;
           }
         }
         $db->commit();
-        $result = $query1;
+        $result = "Query succesful";
     } catch (Exception $e) {
         // An exception has been thrown
         // We must rollback the transaction
@@ -185,10 +192,15 @@ function editUnidad($db, $data){
           break;
           case 'd': 
             $query2 = sprintf ("UPDATE `unidad.departamento`
-                SET ambientes = '%s'
+                SET ambientes = '%s',
+                    piso = '%s',
+                    letra = '%s'
                 WHERE id_unidad = '%s'",
                   $db->real_escape_string($data->ambientes),
+                  $db->real_escape_string($data->piso),
+                  $db->real_escape_string($data->letra),
                   $db->real_escape_string($data->id));
+            echo $query2;
           break;
           case 'k': break;
           case 't': break;
